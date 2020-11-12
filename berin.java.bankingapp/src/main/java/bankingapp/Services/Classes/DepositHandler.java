@@ -1,5 +1,8 @@
 package bankingapp.Services.Classes;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import bankingapp.ApplicationLookUpTable.Definitions;
 import bankingapp.Model.Classes.BankAccount;
 import bankingapp.Model.Classes.BankAccountDAO;
@@ -8,6 +11,8 @@ import bankingapp.Protocol.Classes.ResponseProtocol;
 import bankingapp.Services.Interfaces.HandlerService;
 
 public class DepositHandler implements HandlerService {
+
+    private static Logger logger = LogManager.getLogger("applogger");
 
     @Override
     public ResponseProtocol Handler(RequestProtocol requestPayload) throws Exception {
@@ -24,11 +29,14 @@ public class DepositHandler implements HandlerService {
                 bankAcct.Deposit(depositAmount);
                 success = bankDao.Update(bankAcct);
 
-                if (success)
+                if (success) {
                     response = new ResponseProtocol(true,
                             "Deposit successful. New balance: " + bankAcct.getBalance().toString());
-                else
+                    logger.info("Deposit to account " + bankAcct.getAccountId() + " made " + " for a total of "
+                            + depositAmount.toString());
+                } else {
                     response = new ResponseProtocol(false, "Deposit failed. Please try again later.");
+                }
             } else
                 throw new Exception("Missing action header. Cannot proceed with request.");
 

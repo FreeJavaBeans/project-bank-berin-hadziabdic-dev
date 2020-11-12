@@ -1,7 +1,11 @@
 package bankingapp.Views.ViewClasses.EmployeeViews;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Map;
+import java.util.Scanner;
 
+import bankingapp.API;
 import bankingapp.ApplicationLookUpTable.Definitions;
 import bankingapp.Views.AbstractViewClasses.AccountViewBase;
 
@@ -16,7 +20,21 @@ public class ViewAllTransactionsView extends AccountViewBase {
     @Override
     protected void InitView() {
         // TODO Auto-generated method stub
+        try {
+            File myObj = new File("trace.log");
+            Scanner myReader = new Scanner(myObj);
+            if (myReader.hasNextLine())
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    System.out.println(data);
+                }
+            else
+                System.out
+                        .println("No transactions have taken as of yet. Please come back at a later time. Thank you.");
+            myReader.close();
+        } catch (FileNotFoundException e) {
 
+        }
     }
 
     @Override
@@ -27,6 +45,12 @@ public class ViewAllTransactionsView extends AccountViewBase {
         System.out.println("We are loading all transactions that have taken place at our bank . . .");
         this.InitView();
 
+    }
+
+    @Override
+
+    public String GetNext() {
+        return API.EMPLOYEE_MENU;
     }
 
 }

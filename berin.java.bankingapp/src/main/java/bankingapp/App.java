@@ -9,6 +9,7 @@ import bankingapp.Views.ViewClasses.CustomerViews.PostMoneyTransferView;
 import bankingapp.Views.ViewClasses.CustomerViews.WithdrawView;
 import bankingapp.Views.ViewClasses.EmployeeViews.ApproveAccountView;
 import bankingapp.Views.ViewClasses.EmployeeViews.EmployeeMenuView;
+import bankingapp.Views.ViewClasses.EmployeeViews.ViewAllTransactionsView;
 import bankingapp.Views.ViewClasses.EmployeeViews.ViewCustomersAccountView;
 import bankingapp.Views.ViewClasses.GeneralViews.Index;
 import bankingapp.Views.ViewClasses.GeneralViews.LoginView;
@@ -16,9 +17,6 @@ import bankingapp.Views.ViewClasses.GeneralViews.RegisterView;
 
 import java.util.Map;
 
-import org.apache.logging.log4j.Logger;
-
-import bankingapp.Logger.LoggerSingleton;
 import bankingapp.Views.ViewClasses.ViewContainer;
 
 /**
@@ -27,9 +25,6 @@ import bankingapp.Views.ViewClasses.ViewContainer;
  */
 public class App {
     public static void main(String[] args) {
-
-        Logger rootLogger = LoggerSingleton.GetSingleton();
-        rootLogger.info("hi");
 
         try {
             ViewContainer appViews = new ViewContainer();
@@ -52,6 +47,7 @@ public class App {
             ApproveAccountView approveView = new ApproveAccountView(intState, dblState, stringState);
             ViewCustomersAccountView viewCusotmersAccountView = new ViewCustomersAccountView(intState, dblState,
                     stringState);
+            ViewAllTransactionsView viewAllTransacts = new ViewAllTransactionsView(intState, dblState, stringState);
 
             appViews.RegisterView(API.ROOTVIEW, index);
             appViews.RegisterView(API.REGISTER, register);
@@ -67,6 +63,7 @@ public class App {
             appViews.RegisterView(API.EMPLOYEE_MENU, employeeMenu);
             appViews.RegisterView(API.APPROVE_ACCOUNT_APP, approveView);
             appViews.RegisterView(API.VIEW_ACCOUNTS_AND_BALANCES, viewCusotmersAccountView);
+            appViews.RegisterView(API.EMPLOYEE_VIEW_TRANSACTIONS, viewAllTransacts);
 
             try {
                 appViews.Init();
